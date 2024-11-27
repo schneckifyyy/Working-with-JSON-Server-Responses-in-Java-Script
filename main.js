@@ -22,12 +22,38 @@ async function fetchData() {
 }
 
 // DOM elements
+
 let locationButton = document.getElementById("LocationButton");
 let locationDiv = document.getElementById("location");
 
+async function promoteLocation() {
+    const locations = await fetchData();
+    let recommendation = document.getElementById("recommendation");
+    let rnd = Math.floor(Math.random() * locations.length); // Get a random index
+    let promoted = locations[rnd];
+    let prom = new Location(
+        promoted.OBJECTID,
+        promoted.ID,
+        promoted.LOCATION,
+        promoted.BEZIRK,
+        promoted.ADRESSE,
+        promoted.TELEFONNUMMER,
+        promoted.EMAIL,
+        promoted.WEBLINK1
+    );
+    recommendation.innerHTML =  `
+        <strong>${prom.Location}</strong><br>
+        Address: ${prom.Adresse}<br>
+        Phone: ${prom.TelefonNummer}<br>
+        Email: ${prom.Email}<br>
+        Website: <a href="${prom.Weblink}" target="_blank">${prom.Weblink}</a>
+    `;
+}
+promoteLocation();
+
 // Function to display a random location
 async function printRndLocation() {
-    const locations = await fetchData(); // Wait for the data to be fetched
+    let locations = await fetchData();
     let rnd = Math.floor(Math.random() * locations.length); // Get a random index
     let location = locations[rnd];
 
