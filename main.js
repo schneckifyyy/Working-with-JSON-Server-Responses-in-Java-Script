@@ -1,6 +1,4 @@
 'use strict';
-
-// Define Location class
 class Location {
     constructor(ObjectID, ID, Location, Bezirk, Adresse, TelefonNummer, Email, Weblink) {
         this.ObjectID = ObjectID;
@@ -16,8 +14,7 @@ class Location {
 
 // Fetch data function
 async function fetchData() {
-    const response = await fetch('https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TRAUMHOCHZEITOGD&srsName=EPSG:4326&outputFormat=json');
-    const data = await response.json();
+    const data = await fetch('https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TRAUMHOCHZEITOGD&srsName=EPSG:4326&outputFormat=json').then(response => response.json() );
     return data.features.map(feature => feature.properties); // Extract `properties`
 }
 
